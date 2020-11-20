@@ -1,0 +1,22 @@
+---
+# tasks file for testing
+- name: Install required packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - httpd
+    - firewalld
+
+- name: Enable Services
+  systemd:
+    name: "{{ item }}" 
+    enabled: yes
+  loop:
+    - httpd
+    - firewalld
+
+#- name: Create a random file in tmp
+#  copy:
+#    content: "Demo File Contents"
+#    dest: "/tmp/demo.txt"
