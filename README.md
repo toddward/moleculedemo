@@ -2,7 +2,7 @@
 
 ## Objective
 
-Provide a quick overview of molecule usage and example tests.  Questions, contact Todd Wardzinski (todd.wardzinski@redhat.com)
+Provide a quick overview of molecule usage and example tests.  Questions, contact Todd Wardzinski ()
 
 ## Prerequisites
 
@@ -103,3 +103,85 @@ Provide a quick overview of molecule usage and example tests.  Questions, contac
     Verifier completed successfully.
     ```
 
+### Demo 2 - Applying Molecule to existing Roles
+
+1. For role skeleton, have `ansible-galaxy` generate it. Note: this has already been done for this demo.
+
+    ```bash
+    ansible-galaxy init demo2
+    ```
+
+2. Apply molecule unit tests to the role directory:\
+
+    ```bash
+    cd demo2
+    molecule init scenario --role-name demo2 -d podman --verifier-name testinfra
+    ```
+
+3. Configure your platforms in `./demo2/molecule/default/molecule.yml`
+
+    ```yaml
+    ---
+    dependency:
+      name: galaxy
+    driver:
+      name: podman
+    platforms:
+      - name: cent8
+        image: centos:8
+        pre_build_image: true
+        privileged: true
+    provisioner:
+      name: ansible
+    verifier:
+      name: testinfra
+    ```
+
+4. Configure your tasks in `./demo2/tasks/main.yml`:
+
+    ```yaml
+    ---
+    - name: Install packages
+      package:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - nginx
+        - wget
+    ```
+
+5. Test expected reults in `./demo2/molecule/default/tests/test_default.py`:
+
+    ```python
+    import os
+    import pytest
+
+    import testinfra.utils.ansible_runner
+
+    testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
+        os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
+
+
+    @pytest.mark.parametrize('pkg', [
+      'nginx',
+      'wget'
+    ])
+    def test_pkg(host, pkg):
+        package = host.package(pkg)
+        assert package.is_installed
+    ```
+  
+6. Execute tests with `molecule test` and get expected results of:
+
+    ```bash
+    ============================= test session starts ==============================
+    platform linux -- Python 3.6.8, pytest-6.1.2, py-1.9.0, pluggy-0.13.1
+    rootdir: /home/toddwardzinski/moleculedemo/demo2/molecule/default
+    plugins: testinfra-6.1.0
+    collected 2 items                                                              
+    
+    tests/test_default.py ..                                                 [100%]
+    
+    ============================== 2 passed in 47.66s ==============================
+    ```
+    
