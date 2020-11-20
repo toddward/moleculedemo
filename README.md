@@ -14,7 +14,32 @@ Provide a quick overview of molecule usage and example tests.  Questions, contac
   python3 -m pip install "molecule[ansible,lint,podman]" --user
 
   python3 -m pip install pytest-testinfra --user
-    ```
+  ```
+
+* Note: this demo was run on CentOS 8.
+  ```
+  [toddwardzinski@localhost demo2]$ neofetch
+                  ..                    toddwardzinski@localhost.localdomain 
+                .PLTJ.                  ------------------------------------ 
+                <><><><>                 OS: CentOS Linux 8 (Core) x86_64 
+      KKSSV' 4KKK LJ KKKL.'VSSKK        Host: HVM domU 4.13 
+      KKV' 4KKKKK LJ KKKKAL 'VKK        Kernel: 4.18.0-151.el8.x86_64 
+      V' ' 'VKKKK LJ KKKKV' ' 'V        Uptime: 3 hours, 38 mins 
+      .4MA.' 'VKK LJ KKV' '.4Mb.        Packages: 623 (rpm) 
+    . KKKKKA.' 'V LJ V' '.4KKKKK .      Shell: bash 4.4.19 
+  .4D KKKKKKKA.'' LJ ''.4KKKKKKK FA.    Resolution: 1024x768 
+  <QDD ++++++++++++  ++++++++++++ GFD>   Terminal: /dev/pts/0 
+  'VD KKKKKKKK'.. LJ ..'KKKKKKKK FV     CPU: Intel Xeon E5-2420 v2 (1) @ 2.200GHz 
+    ' VKKKKK'. .4 LJ K. .'KKKKKV '      GPU: 00:02.0 Vendor 1234 Device 1111 
+        'VK'. .4KK LJ KKA. .'KV'         Memory: 543MiB / 3906MiB 
+      A. . .4KKKK LJ KKKKA. . .4
+      KKA. 'KKKKK LJ KKKKK' .4KK                                
+      KKSSA. VKKK LJ KKKV .4SSKK                                
+                <><><><>
+                'MKKM'
+                  ''
+
+  ```
 
 ## Generating Skeleton Framework for Molecule
 
@@ -184,4 +209,3 @@ Provide a quick overview of molecule usage and example tests.  Questions, contac
     
     ============================== 2 passed in 47.66s ==============================
     ```
-    
